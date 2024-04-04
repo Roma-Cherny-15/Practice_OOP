@@ -396,6 +396,7 @@ public class MainTest {
 }
 ````
 ### Результати роботи програми
-Пройдені тести:
-![](./images/Task2_tests_completed.png)
+#### Пройдені тести:
+![](./images/Task2_tests_completed.PNG)
+
 
