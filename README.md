@@ -397,7 +397,7 @@ public class MainTest {
 ````
 ### Результати роботи програми
 #### Пройдені тести:
-![](./images/Task2_tests_completed.PNG)
+![](./images/Task2_tests_completed1.PNG)
 
 #### Обчислення:
 ![](./images/Task2_calculated.PNG)
