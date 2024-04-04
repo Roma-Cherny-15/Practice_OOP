@@ -399,4 +399,9 @@ public class MainTest {
 #### Пройдені тести:
 ![](./images/Task2_tests_completed.PNG)
 
+#### Обчислення:
+![](./images/Task2_calculated.PNG)
+#### Серіалізаці/десеріалізація:
+![](./images/Task2_test_serialization.PNG)
+
 
