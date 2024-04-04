@@ -347,35 +347,6 @@ public class MainTest {
   }
 
   @Test
-  public void testRestore() {
-    System.out.println("Restore test:");
-    Calc calc = new Calc();
-    String phoneNumber, mobileOperator;
-    phoneNumber = calc.GenerateRandomPhoneNumber();
-    mobileOperator = calc.init(phoneNumber);
-    calc.show();
-    try {
-      calc.save();
-    } catch (IOException e) {
-      Assert.fail(e.getMessage());
-    }
-    System.out.println("Saved succesfully.");
-    System.out.println("\nNew generation: ");
-    calc.init(calc.GenerateRandomPhoneNumber());
-    calc.show();
-    try {
-      calc.restore();
-    } catch (Exception e) {
-      Assert.fail(e.getMessage());
-    }
-    System.out.println("\nRestored succesfully.");
-    assertEquals(mobileOperator, calc.getResult().getMobileOperator());
-
-    assertEquals(phoneNumber, calc.getResult().getPhoneNumber());
-    calc.show();
-  }
-
-  @Test
   public void testSerialization() {
     System.out.println("Serialization test:");
     Calc calc = new Calc();
