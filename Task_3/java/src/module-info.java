@@ -1,0 +1,3 @@
+module pro {
+	requires junit;
+}
