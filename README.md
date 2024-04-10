@@ -376,3 +376,129 @@ public class MainTest {
 ![](./images/Task2_test_serialization.PNG)
 
 
+# Завдання 3
+### Product (шаблон проектування Factory Method), інтерфейс "фабрикованих" об'єктів, оголошує методи відображення об'єктів:
+#### View.java
+````java
+package ex03;
+import java.io.IOException;
+
+public interface View {
+/** Отображает заголовок */
+public void viewHeader();
+/** Отображает основную часть */
+public void viewBody();
+/** Отображает окончание */
+public void viewFooter();
+/** Отображает объект целиком */
+public void viewShow();
+
+public void FillCollectionWithRandom();
+/** Выполняет инициализацию */
+public void viewInit();
+/** Сохраняет данные для последующего восстановления */
+public void viewSave() throws IOException;
+/** Восстанавливает ранее сохранённые данные */
+public void viewRestore() throws Exception;
+}
+````
+
+### Шаблон проектування Factory Method,оголошує метод, "фабрикуючий" об'єкти:
+#### Viewable.java
+````java
+package ex03;
+
+public interface Viewable {
+/** Создаёт объект, реализующий {@linkplain View} */
+public View getView();
+}
+#### ViewableResult.java
+````java
+package ex03;
+
+public class ViewableResult implements Viewable {
+/** Создаёт отображаемый объект {@linkplain ViewResult} */
+@Override
+public View getView() {
+return new ViewResult();
+}
+}
+````
+### Обчислення та відображення результатів, містить реалізацію статичного методу main():
+#### Main.java
+````java
+package ex03;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+/** Вычисление и отображение результатов.
+  Содержит реализацию статического метода main()*/
+public class Main {
+
+	
+    private View view;
+
+    public Main(View view) {
+        this.view = view;
+    }
+
+
+  private void menu() {
+    String s = null;
+    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+    do {
+      do {
+        System.out.println("Enter command...");
+        System.out.print("'q'uit, 'v'iew, 'g'enerate, 's'ave, 'r'estore: ");
+        try {
+          s = in.readLine();
+        } catch (IOException e) {
+          System.out.println("Error: " + e);
+          System.exit(0);
+        }
+      } while (s.length() != 1);
+      switch (s.charAt(0)) {
+      case 'q':
+        System.out.println("Exit.");
+        break;
+      case 'v':
+        System.out.println("View current.");
+        view.viewShow();
+        break;
+      case 'g':
+        System.out.println("Random generation.");
+        view.FillCollectionWithRandom();
+        view.viewInit();
+        view.viewShow();
+        break;
+      case 's':
+        System.out.println("Save current.");
+        try {
+          view.viewSave();
+        } catch (IOException e) {
+          System.out.println("Serialization error: " + e);
+        }
+        view.viewShow();
+        break;
+      case 'r':
+        System.out.println("Restore last saved.");
+        try {
+          view.viewRestore();
+        } catch (Exception e) {
+
+          System.out.println("Serialization error: " + e);
+        }
+        view.viewShow();
+        break;
+      default:
+        System.out.print("Wrong command. ");
+      }
+    } while (s.charAt(0) != 'q');
+  }
+
+  public static void main(String[] args) {
+    Main main = new Main(new ViewableResult().getView());
+    main.menu();
+  }
+}
+````
