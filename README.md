@@ -775,3 +775,5 @@ public class MainTest {
   }
 }
 ````
+### Виконані тести:
+![](./images/Task3_tests_completed.png)
