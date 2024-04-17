@@ -777,3 +777,124 @@ public class MainTest {
 ````
 ### Виконані тести:
 ![](./images/Task3_tests_completed.png)
+
+# Завдання 4
+
+>-	за основу використовувати вихідний текст проекту попередньої лабораторної роботи Використовуючи шаблон проектування Factory Method (Virtual Constructor), розширити ієрархію похідними класами, реалізують методи для подання результатів у вигляді текстової таблиці. Параметри відображення таблиці мають визначатися користувачем;
+>-	продемонструвати заміщення (перевизначення, overriding), поєднання (перевантаження, overloading), динамічне призначення методів (Пізнє зв'язування, поліморфізм, dynamic method dispatch);
+>-	забезпечити діалоговий інтерфейс із користувачем;
+>-	розробити клас для тестування основної функціональност;
+>-	використати коментарі для автоматичної генерації документації засобами javadoc;
+
+
+#### Main.java
+````java
+package ex04;
+import ex03.View;
+/** Вычисление и отображение результатов<br>
+* Содержит реализацию статического метода main()
+* @author xone
+* @version 3.0
+* @see Main#main
+*/
+public class Main extends ex03.Main {
+/** Инициализирует поле {@linkplain ex02.Main#view view} */
+public Main(View view) {
+super(view);
+}
+/** Выполняется при запуске программы;
+* вызывает метод {@linkplain ex02.Main#menu menu()}
+* @param args - параметры запуска программы
+*/
+public static void main(String[] args) {
+Main main = new Main(new ViewableTable().getView());
+main.menu();
+}
+}
+````
+
+# Завдання 5
+
+>-	реалізувати можливість скасування (undo) операцій (команд);
+>-	продемонструвати поняття "макрокоманда";
+>- при розробці програми використовувати шаблон Singletone;
+>-	забезпечити діалоговий інтерфейс із користувачем;
+>-	розробити клас для тестування функціональності програми;
+
+
+
+#### Main.java
+````java
+package ex05;
+/** Вычисление и отображение
+* результатов; cодержит реализацию
+* статического метода main()
+* @author xone
+* @version 4.0
+* @see Main#main
+*/
+public class Main {
+/** Выполняется при запуске программы;
+* вызывает метод {@linkplain Application#run()}
+* @param args параметры запуска программы
+*/
+public static void main(String[] args) {
+Application app = Application.getInstance();
+app.run();
+}
+}
+````
+
+# Завдання 6
+
+>-	продемонструвати можливість паралельної обробки елементів колекції (пошук мінімуму, максимуму, обчислення середнього значення, відбір за критерієм, статистична обробка тощо);
+>-	управління чергою завдань (команд) реалізувати за допомогою шаблону Worker Thread;
+
+
+#### Main.java
+````java
+package ex06;
+
+import ex03.View;
+import ex03.ViewableResult;
+import ex05.ChangeConsoleCommand;
+import ex05.GenerateConsoleCommand;
+import ex05.Menu;
+import ex05.ViewConsoleCommand;
+/** Вычисление и отображение
+* результатов; содержит реализацию
+* статического метода main()
+* @author xone
+* @version 5.0
+* @see Main#main
+*/
+public class Main {
+/** Объект, реализующий интерфейс {@linkplain View};
+* обслуживает коллекцию объектов {@linkplain ex01.Item2d};
+
+15
+
+* инициализируется с помощью Factory Method
+*/
+private View view = new ViewableResult().getView();
+/** Объект класса {@linkplain Menu};
+* макрокоманда (шаблон Command)
+*/
+private Menu menu = new Menu();
+/** Обработка команд пользователя */
+public void run() {
+menu.add(new ViewConsoleCommand(view));
+menu.add(new GenerateConsoleCommand(view));
+menu.add(new ChangeConsoleCommand(view));
+menu.add(new ExecuteConsoleCommand(view));
+menu.execute();
+}
+/** Выполняется при запуске программы
+* @param args параметры запуска программы
+*/
+public static void main(String[] args) {
+Main main = new Main();
+main.run();
+}
+}
+````
